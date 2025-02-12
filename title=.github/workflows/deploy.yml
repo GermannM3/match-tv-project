@@ -1,0 +1,36 @@
+name: Deploy
+
+# Запускать workflow при пуше тега, начинающегося с v, например, v1.0.0
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build project
+        run: |
+          echo "Сборка проекта..."
+          # Здесь можно добавить команды сборки (например, генерация артефактов)
+
+      - name: Deploy project
+        run: |
+          echo "Деплой проекта..."
+          # Здесь можно добавить команды деплоя (например, копирование файлов на сервер,
+          # публикация на GitHub Pages или загрузка артефактов в релиз) 

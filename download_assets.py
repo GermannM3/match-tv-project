@@ -20,54 +20,56 @@ def create_directories():
         raise
 
 def download_office_intro():
-    url = "https://example.com/office_intro.mp4"  # Замените на реальный URL
-    dest = Path("source/office_intro.mp4")
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    print("Скачивание интро Office...")
+    """Скачивание интро The Office"""
     try:
-        response = requests.get(url)
-        with open(dest, "wb") as f:
-            f.write(response.content)
-        print("✅ Интро Office скачано")
+        ydl_opts = {
+            'format': 'best',
+            'outtmpl': 'source/office_intro.%(ext)s',
+            'quiet': True
+        }
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            logger.info("Скачивание интро The Office...")
+            ydl.download(['https://www.youtube.com/watch?v=Q9FZllrBw30'])
     except Exception as e:
-        print("❌ Ошибка при скачивании интро Office:", e)
+        logger.error(f"Ошибка загрузки интро: {e}")
+        raise
 
 def download_commentators_photos():
     # Данный шаг уже выполняется через download_faces.py
     print("Функция загрузки фото комментаторов реализована в download_faces.py. Пропускаем этот шаг.")
 
 def download_sports_videos():
-    """Загрузка видео со спортсменами"""
-    # Используем короткие клипы с YouTube
+    """Скачивание спортивных моментов"""
     athletes = {
-        'messi': 'https://www.youtube.com/watch?v=S7_XjS6_VnE',  # Лучшие моменты Месси
-        'ovechkin': 'https://www.youtube.com/watch?v=Ht_gKUmXJ2o',  # Хайлайты Овечкина
-        'medvedeva': 'https://www.youtube.com/watch?v=JUL5gK6c6Gs',  # Выступление Медведевой
-        'vinicius': 'https://www.youtube.com/watch?v=W8U_qp_Rz0E'  # Моменты Винисиуса
+        'messi': 'https://www.youtube.com/watch?v=auXQtoAyCGA',
+        'ronaldo': 'https://www.youtube.com/watch?v=OUKGsb8CpF8'
     }
     
     ydl_opts = {
         'format': 'best',
         'outtmpl': 'source/%(title)s.%(ext)s',
-        'max_filesize': '100M'  # Ограничим размер файлов
+        'max_filesize': '500M'
     }
-    
+
     for name, url in athletes.items():
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([url])
+        try:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                logger.info(f"Скачивание видео {name}...")
+                ydl.download([url])
+        except Exception as e:
+            logger.error(f"Ошибка загрузки {name}: {e}")
 
 def download_match_tv_logo():
-    url = "https://example.com/match_tv_logo.png"  # Замените на реальный URL
-    dest = Path("source/match_tv_logo.png")
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    print("Скачивание логотипа Match TV...")
+    """Скачивание логотипа Match TV"""
+    url = "https://upload.wikimedia.org/wikipedia/commons/a/a9/Match_TV_logo.png"
     try:
         response = requests.get(url)
-        with open(dest, "wb") as f:
+        with open('source/match_tv_logo.png', 'wb') as f:
             f.write(response.content)
-        print("✅ Логотип Match TV скачан")
+        logger.info("Логотип Match TV скачан")
     except Exception as e:
-        print("❌ Ошибка при скачивании логотипа Match TV:", e)
+        logger.error(f"Ошибка загрузки логотипа: {e}")
+        raise
 
 if __name__ == "__main__":
     create_directories()

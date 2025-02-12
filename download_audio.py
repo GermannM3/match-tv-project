@@ -7,61 +7,60 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def download_audio():
-    """Загрузка аудио материалов"""
-    
-    # Создаем директории для аудио
-    Path('audio/voices').mkdir(parents=True, exist_ok=True)
-    Path('audio/music').mkdir(parents=True, exist_ok=True)
-    
-    # Словарь с URL голосов комментаторов
+    """Основная функция загрузки аудио"""
     voices = {
-        'cherdantsev': 'https://www.youtube.com/watch?v=example1',  # Заменить на реальные URL
-        'guberniev': 'https://www.youtube.com/watch?v=example2',
-        'genich': 'https://www.youtube.com/watch?v=example3',
-        'orzul': 'https://www.youtube.com/watch?v=example4',
-        'naguchev': 'https://www.youtube.com/watch?v=example5'
+        'cherdantsev': 'https://www.youtube.com/watch?v=5qap5aO4i9A',
+        'guberniev': 'https://www.youtube.com/watch?v=3sMn7vnFWVU',
+        'genich': 'https://www.youtube.com/watch?v=YOUR_REAL_ID_HERE',
+        'orzul': 'https://www.youtube.com/watch?v=YOUR_REAL_ID_HERE',
+        'naguchev': 'https://www.youtube.com/watch?v=YOUR_REAL_ID_HERE'
     }
-    
-    # Словарь с URL музыки
+
     music = {
-        'sports_theme': 'https://www.youtube.com/watch?v=example6',
-        'match_tv_intro': 'https://www.youtube.com/watch?v=example7',
-        'background_music': 'https://www.youtube.com/watch?v=example8'
+        'sports_theme': 'https://www.youtube.com/watch?v=dyRsYk0LyA8',
+        'match_tv_intro': 'https://www.youtube.com/watch?v=3sMn7vnFWVU',
+        'background_music': 'https://www.youtube.com/watch?v=YOUR_REAL_ID_HERE'
     }
-    
-    # Настройки для yt-dlp
-    ydl_opts = {
-        'format': 'bestaudio/best',
-        'postprocessors': [{
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192',
-        }],
-        'quiet': True,
-        'no_warnings': True
-    }
-    
-    # Загрузка голосов комментаторов
+
+    # Создаем директории
+    Path("audio/voices").mkdir(parents=True, exist_ok=True)
+    Path("audio/music").mkdir(parents=True, exist_ok=True)
+
+    # Загрузка голосов
     logger.info("Загрузка голосов комментаторов...")
     for name, url in voices.items():
         try:
-            ydl_opts['outtmpl'] = f'audio/voices/{name}.%(ext)s'
+            ydl_opts = {
+                'format': 'bestaudio/best',
+                'outtmpl': f'audio/voices/{name}.%(ext)s',
+                'postprocessors': [{
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec': 'mp3',
+                }]
+            }
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
-            logger.info(f"✅ Загружен голос {name}")
+            logger.info(f"✅ Голос {name} загружен")
         except Exception as e:
-            logger.error(f"❌ Ошибка при загрузке голоса {name}: {str(e)}")
-    
+            logger.error(f"❌ Ошибка загрузки {name}: {str(e)}")
+
     # Загрузка музыки
     logger.info("\nЗагрузка музыки...")
     for name, url in music.items():
         try:
-            ydl_opts['outtmpl'] = f'audio/music/{name}.%(ext)s'
+            ydl_opts = {
+                'format': 'bestaudio/best',
+                'outtmpl': f'audio/music/{name}.%(ext)s',
+                'postprocessors': [{
+                    'key': 'FFmpegExtractAudio',
+                    'preferredcodec': 'mp3',
+                }]
+            }
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
-            logger.info(f"✅ Загружена музыка {name}")
+            logger.info(f"✅ Музыка {name} загружена")
         except Exception as e:
-            logger.error(f"❌ Ошибка при загрузке музыки {name}: {str(e)}")
+            logger.error(f"❌ Ошибка загрузки {name}: {str(e)}")
 
 if __name__ == "__main__":
     download_audio() 
