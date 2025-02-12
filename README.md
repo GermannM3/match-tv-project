@@ -24,3 +24,15 @@
 ## 🚀 Быстрый старт
 
 ### Локальный запуск
+
+
+
+## 🚀 Тестирование проекта
+
+Для запуска тестов используйте Google Colab:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/GermannM3/match-tv-project/blob/main/match_tv_project.ipynb)
+
+1. Нажмите кнопку "Open in Colab"
+2. Выберите Runtime -> Change runtime type -> GPU
+3. Запустите все ячейки (Runtime -> Run all)
