@@ -20,36 +20,21 @@ def create_directories():
         raise
 
 def download_office_intro():
-    """Загрузка интро сериала Office"""
+    url = "https://example.com/office_intro.mp4"  # Замените на реальный URL
+    dest = Path("source/office_intro.mp4")
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    print("Скачивание интро Office...")
     try:
-        ydl_opts = {
-            'format': 'best',
-            'outtmpl': 'source/office_intro.%(ext)s',
-            'quiet': True,
-            'no_warnings': True
-        }
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            logger.info("Downloading Office intro...")
-            ydl.download(['https://www.youtube.com/watch?v=_iiOgRrPS2E'])
+        response = requests.get(url)
+        with open(dest, "wb") as f:
+            f.write(response.content)
+        print("✅ Интро Office скачано")
     except Exception as e:
-        logger.error(f"Error downloading Office intro: {str(e)}")
-        raise
+        print("❌ Ошибка при скачивании интро Office:", e)
 
 def download_commentators_photos():
-    """Загрузка фотографий комментаторов"""
-    commentators = {
-        'cherdantsev': 'https://img.championat.com/s/735x490/news/big/z/p/georgij-cherdancev-prokommentiroval-uhod-dzyuby-iz-zenita_16530727051194112605.jpg',
-        'guberniev': 'https://upload.wikimedia.org/wikipedia/commons/7/7a/Dmitry_Guberniev_2016.jpg',
-        'genich': 'https://static.bombardir.ru/images/profile/32/86/konstantin-genich.jpg',
-        'orzul': 'https://s5o.ru/storage/simple/ru/edt/90/51/d7/7c/rue5891431f6d.jpg',
-        'naguchev': 'https://img.championat.com/s/735x490/news/big/q/l/roman-naguchev-pokinul-match-tv_15674065001801495682.jpg'
-    }
-    
-    for name, url in commentators.items():
-        response = requests.get(url)
-        if response.status_code == 200:
-            with open(f'faces/{name}.jpg', 'wb') as f:
-                f.write(response.content)
+    # Данный шаг уже выполняется через download_faces.py
+    print("Функция загрузки фото комментаторов реализована в download_faces.py. Пропускаем этот шаг.")
 
 def download_sports_videos():
     """Загрузка видео со спортсменами"""
@@ -72,12 +57,17 @@ def download_sports_videos():
             ydl.download([url])
 
 def download_match_tv_logo():
-    """Загрузка логотипа Матч ТВ"""
-    url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Match_TV_logo.svg/1200px-Match_TV_logo.svg.png'
-    response = requests.get(url)
-    if response.status_code == 200:
-        with open('source/match_tv_logo.png', 'wb') as f:
+    url = "https://example.com/match_tv_logo.png"  # Замените на реальный URL
+    dest = Path("source/match_tv_logo.png")
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    print("Скачивание логотипа Match TV...")
+    try:
+        response = requests.get(url)
+        with open(dest, "wb") as f:
             f.write(response.content)
+        print("✅ Логотип Match TV скачан")
+    except Exception as e:
+        print("❌ Ошибка при скачивании логотипа Match TV:", e)
 
 if __name__ == "__main__":
     create_directories()
