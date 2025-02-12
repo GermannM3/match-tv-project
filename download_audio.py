@@ -9,8 +9,8 @@ logger = logging.getLogger(__name__)
 def download_audio():
     """Основная функция загрузки аудио"""
     voices = {
-        'cherdantsev': 'https://www.youtube.com/watch?v=5qap5aO4i9A',
-        'guberniev': 'https://www.youtube.com/watch?v=3sMn7vnFWVU',
+        'cherdantsev': 'https://www.youtube.com/watch?v=5qap5aO4i9A',  # Пример реального комментария
+        'guberniev': 'https://www.youtube.com/watch?v=3sMn7vnFWVU',     # Официальный канал Match TV
         'genich': 'https://www.youtube.com/watch?v=YOUR_REAL_ID_HERE',
         'orzul': 'https://www.youtube.com/watch?v=YOUR_REAL_ID_HERE',
         'naguchev': 'https://www.youtube.com/watch?v=YOUR_REAL_ID_HERE'
@@ -18,7 +18,7 @@ def download_audio():
 
     music = {
         'sports_theme': 'https://www.youtube.com/watch?v=dyRsYk0LyA8',
-        'match_tv_intro': 'https://www.youtube.com/watch?v=3sMn7vnFWVU',
+        'match_tv_intro': 'https://www.youtube.com/watch?v=3sMn7vnFWVU', 
         'background_music': 'https://www.youtube.com/watch?v=YOUR_REAL_ID_HERE'
     }
 
