@@ -1,24 +1,38 @@
-import moviepy.editor as mp
-from moviepy.video.tools.drawing import color_gradient
+from moviepy.editor import VideoFileClip, TextClip, CompositeVideoClip
+import numpy as np
 
 def replace_titles(video_path):
-    video = mp.VideoFileClip(video_path)
-    
-    # Создание новых титров
-    def create_title(text, duration):
-        return mp.TextClip(text, 
-                          font='Helvetica', 
-                          fontsize=48, 
-                          color='white')
-    
-    # Замена титров для каждого актера
-    titles = {
-        'Георгий Черданцев': (10, 13),
-        'Дмитрий Губерниев': (14, 17),
-        # ... остальные тайминги ...
-    }
-    
-    # Замена финального логотипа
-    match_tv_logo = mp.ImageClip('match_tv_logo.png')
-    
-    # ... существующий код ... 
+    """Замена титров в видео"""
+    try:
+        # Загружаем видео
+        video = VideoFileClip(video_path)
+        
+        # Создаем титры
+        titles = [
+            ("Георгий Черданцев", 5),
+            ("Дмитрий Губерниев", 10),
+            ("Константин Генич", 15),
+            ("Мария Орзул", 20),
+            ("Роман Нагучев", 25)
+        ]
+        
+        # Добавляем титры
+        clips = [video]
+        for title, start_time in titles:
+            text = TextClip(
+                title, 
+                fontsize=70, 
+                color='white',
+                font='Arial'
+            ).set_position(('center', 'bottom')).set_duration(3).set_start(start_time)
+            clips.append(text)
+        
+        # Собираем финальное видео
+        final = CompositeVideoClip(clips)
+        final.write_videofile("output/final_output.mp4")
+        return True
+    except Exception as e:
+        print(f"Ошибка при замене титров: {str(e)}")
+        return False
+
+# ... остальные функции ... 

@@ -25,6 +25,7 @@ source/
 faces/
 output/
 temp/
+audio/
 
 # Виртуальное окружение
 venv/
@@ -44,6 +45,16 @@ ENV/
 *.jpg
 *.png
 *.avi
+*.mp3
+*.wav
 
 # Jupyter Notebook
-.ipynb_checkpoints 
+.ipynb_checkpoints
+
+# Разрешаем фото комментаторов
+!faces/*.jpg
+
+# Разрешаем скрипты загрузки
+!download_faces.py
+!download_assets.py
+!download_audio.py 
