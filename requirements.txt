@@ -1,0 +1,10 @@
+opencv-python==4.8.1.78
+numpy==1.24.3
+moviepy==1.0.3
+requests==2.31.0
+yt-dlp==2023.11.16
+torch==2.1.1
+torchvision==0.16.1
+insightface==0.7.3
+basicsr==1.4.2
+facexlib==0.3.0 
