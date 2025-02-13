@@ -29,7 +29,7 @@ def download_office_intro():
         }
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             logger.info("Скачивание интро The Office...")
-            ydl.download(['https://www.youtube.com/watch?v=Q9FZllrBw30'])
+            ydl.download(['https://www.youtube.com/watch?v=m7Y7Hq-Ta4o'])  # Актуальное интро
     except Exception as e:
         logger.error(f"Ошибка загрузки интро: {e}")
         raise

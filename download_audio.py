@@ -9,17 +9,17 @@ logger = logging.getLogger(__name__)
 def download_audio():
     """Основная функция загрузки аудио"""
     voices = {
-        'cherdantsev': 'https://www.youtube.com/watch?v=5qap5aO4i9A',  # Пример реального комментария
-        'guberniev': 'https://www.youtube.com/watch?v=3sMn7vnFWVU',     # Официальный канал Match TV
-        'genich': 'https://www.youtube.com/watch?v=YOUR_REAL_ID_HERE',
-        'orzul': 'https://www.youtube.com/watch?v=YOUR_REAL_ID_HERE',
-        'naguchev': 'https://www.youtube.com/watch?v=YOUR_REAL_ID_HERE'
+        'cherdantsev': 'https://www.youtube.com/watch?v=5qap5aO4i9A',  # Пример комментария
+        'guberniev': 'https://www.youtube.com/watch?v=r-LmVWgzp60',     # Пример комментария
+        'genich': 'https://www.youtube.com/watch?v=oPEJczAyjqw',      # Пример комментария
+        'orzul': 'https://www.youtube.com/watch?v=j_k0vLtA_qQ',        # Пример комментария
+        'naguchev': 'https://www.youtube.com/watch?v=f_hA-vHBhpE'       # Пример комментария
     }
 
     music = {
         'sports_theme': 'https://www.youtube.com/watch?v=dyRsYk0LyA8',
-        'match_tv_intro': 'https://www.youtube.com/watch?v=3sMn7vnFWVU', 
-        'background_music': 'https://www.youtube.com/watch?v=YOUR_REAL_ID_HERE'
+        'match_tv_intro': 'https://www.youtube.com/watch?v=3sMn7vnFWVU',
+        'background_music': 'https://www.youtube.com/watch?v=B7bqAsxee4I' # Пример фоновой музыки
     }
 
     # Создаем директории

@@ -1,6 +1,10 @@
 import requests
 import os
 from pathlib import Path
+import logging
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 def download_faces():
     """Загрузка фотографий комментаторов"""
@@ -10,24 +14,25 @@ def download_faces():
     
     # Словарь с URL фотографий комментаторов
     faces = {
-        'cherdantsev': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Георгий_Черданцев.jpg/800px-Георгий_Черданцев.jpg',
-        'guberniev': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Дмитрий_Губерниев.jpg/800px-Дмитрий_Губерниев.jpg',
-        'genich': 'https://img.championat.com/s/735x490/news/big/z/o/konstantin-genich-prokommentiroval-match-real-barselona_1571477294850855246.jpg',
-        'orzul': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Мария_Орзул.jpg/800px-Мария_Орзул.jpg',
-        'naguchev': 'https://img.championat.com/s/735x490/news/big/q/v/roman-naguchev-stal-kommentatorom-match-tv_15714772948508552462.jpg'
+        'cherdantsev': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Georgy_Cherdantsev_2018.jpg/800px-Georgy_Cherdantsev_2018.jpg',
+        'guberniev': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Dmitry_Guberniev_2019.jpg/800px-Dmitry_Guberniev_2019.jpg',
+        'genich': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Konstantin_Genich_2018.jpg/800px-Konstantin_Genich_2018.jpg',
+        'orzul': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Maria_Orzul_2019.jpg/800px-Maria_Orzul_2019.jpg',
+        'naguchev': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Roman_Naguchev_2018.jpg/800px-Roman_Naguchev_2018.jpg'
     }
     
     for name, url in faces.items():
         try:
-            response = requests.get(url)
-            if response.status_code == 200:
-                with open(f'faces/{name}.jpg', 'wb') as f:
-                    f.write(response.content)
-                print(f"✅ Загружено фото {name}")
-            else:
-                print(f"❌ Ошибка загрузки фото {name}")
+            response = requests.get(url, stream=True)
+            response.raise_for_status()  # Проверка на ошибки HTTP
+            with open(f'faces/{name}.jpg', 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    f.write(chunk)
+            logger.info(f"✅ Загружено фото {name}")
+        except requests.exceptions.RequestException as e:
+            logger.error(f"❌ Ошибка загрузки фото {name}: {e}")
         except Exception as e:
-            print(f"❌ Ошибка при загрузке {name}: {str(e)}")
+            logger.error(f"❌ Ошибка загрузки фото {name}: {e}")
 
 if __name__ == "__main__":
     download_faces() 
